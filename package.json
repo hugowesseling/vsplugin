@@ -1,0 +1,78 @@
+{
+    "name": "simple-ollama-extension",
+    "displayName": "Simple ollama extension",
+    "description": "A simple ollama calling vs code extension.",
+    "version": "0.0.2",
+    "publisher": "your-publisher-id",
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "activationEvents": [
+        "onCommand:simpleOllamaExtension.helloWorld",
+        "onCommand:simpleOllamaExtension.insert",
+        "onCommand:simpleOllamaExtension.analyze",
+        "onCommand:simpleOllamaExtension.createfunc",
+        "onCommand:simpleOllamaExtension.userfunc"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "simpleOllamaExtension.helloWorld",
+                "title": "Hello World"
+            },
+            {
+                "command": "simpleOllamaExtension.insert",
+                "title": "Insert"
+            },
+            {
+                "command": "simpleOllamaExtension.analyze",
+                "title": "Analyze code"
+            },
+            {
+                "command": "simpleOllamaExtension.createfunc",
+                "title": "Create function from definition"
+            },
+            {
+                "command": "simpleOllamaExtension.userfunc",
+                "title": "Custom operation"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "simpleOllamaExtension.helloWorld",
+                    "group": "navigation"
+                },
+                {
+                    "command": "simpleOllamaExtension.insert",
+                    "group": "navigation"
+                },
+                {
+                    "command": "simpleOllamaExtension.analyze",
+                    "group": "navigation"
+                },
+                {
+                    "command": "simpleOllamaExtension.createfunc",
+                    "group": "navigation"
+                },
+                {
+                    "command": "simpleOllamaExtension.userfunc",
+                    "group": "navigation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.0",
+        "typescript": "^4.0.0",
+        "vscode": "^1.0.0"
+    },
+    "dependencies": {
+        "ollama": "^0.5.9"
+    }
+}
