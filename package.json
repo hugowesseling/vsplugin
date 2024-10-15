@@ -11,8 +11,6 @@
         "vscode": "^1.0.0"
     },
     "activationEvents": [
-        "onCommand:simpleOllamaExtension.helloWorld",
-        "onCommand:simpleOllamaExtension.insert",
         "onCommand:simpleOllamaExtension.analyze",
         "onCommand:simpleOllamaExtension.createfunc",
         "onCommand:simpleOllamaExtension.userfunc"
@@ -21,16 +19,8 @@
     "contributes": {
         "commands": [
             {
-                "command": "simpleOllamaExtension.helloWorld",
-                "title": "Hello World"
-            },
-            {
-                "command": "simpleOllamaExtension.insert",
-                "title": "Insert"
-            },
-            {
                 "command": "simpleOllamaExtension.analyze",
-                "title": "Analyze code"
+                "title": "Analyze"
             },
             {
                 "command": "simpleOllamaExtension.createfunc",
@@ -43,14 +33,6 @@
         ],
         "menus": {
             "editor/context": [
-                {
-                    "command": "simpleOllamaExtension.helloWorld",
-                    "group": "navigation"
-                },
-                {
-                    "command": "simpleOllamaExtension.insert",
-                    "group": "navigation"
-                },
                 {
                     "command": "simpleOllamaExtension.analyze",
                     "group": "navigation"

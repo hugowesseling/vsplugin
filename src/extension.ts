@@ -3,16 +3,18 @@ import ollama from 'ollama'
 
 
 export function activate(context: vscode.ExtensionContext) {
+    /*
     context.subscriptions.push(vscode.commands.registerCommand('simpleOllamaExtension.helloWorld', () => {
         vscode.window.showInformationMessage('Hello World')
     }))
 
-    context.subscriptions.push(vscode.commands.registerCommand('simpleOllamaExtension.analyze', () => {
-        doAnalyzeAction();
-    }))
-
     context.subscriptions.push(vscode.commands.registerCommand('simpleOllamaExtension.insert', () => {
         doInsertAction();
+    }))
+    */
+
+    context.subscriptions.push(vscode.commands.registerCommand('simpleOllamaExtension.analyze', () => {
+        doAnalyzeAction();
     }))
 
     context.subscriptions.push(vscode.commands.registerCommand('simpleOllamaExtension.createfunc', () => {
@@ -24,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
     }))
 }
 
-async function doInsertAction() {
+/*async function doInsertAction() {
     const editor = vscode.window.activeTextEditor;
     if (editor == undefined) {
         vscode.window.showInformationMessage('Can\'t find editor')
@@ -39,7 +41,7 @@ async function doInsertAction() {
     const language = getLanguage()
 
     editor.edit(builder => builder.replace(selection, `${selectedText}\nLanguage: ${language}`))
-}
+}*/
 
 function getLanguage() {
     return vscode.window.activeTextEditor?.document.languageId;
@@ -54,11 +56,23 @@ async function doAnalyzeAction() {
 
     const selection = editor.selection;
     const selectedText = editor.document.getText(selection);
+    const userInput = await vscode.window.showInputBox({placeHolder: 'Enter a question or leave empty:'})
+
+    //vscode.window.showInformationMessage(`The text is: ${selectedText}`);
+    //vscode.window.showInformationMessage(`The user question is: ${userInput}`);
     
-    vscode.window.showInformationMessage(`The text is: ${selectedText}`);
-    vscode.window.showInformationMessage('Calling ollama')
     const language = getLanguage()
-    const content = `Please answer in a single sentence what you think of the following ${language} snippet: --- ${selectedText} ---`
+    let content = `Please answer in a single sentence what you think of the following ${language} snippet: --- ${selectedText} ---`
+    if(selectedText === "")
+    {
+        content = `Please answer in a single sentence "${userInput}" ---`
+    }else
+    if(userInput !== "")
+    {
+        content = `Please answer in a single sentence "${userInput}" about the following ${language} snippet: --- ${selectedText} ---`
+    }
+    
+    vscode.window.showInformationMessage(`Calling ollama with content: ${content}`)
     const response = await ollama.chat({
         model: 'llama3.2',
         messages: [{ role: 'user', content: content }],
@@ -77,9 +91,9 @@ async function doCreateFuncAction() {
     const selection = editor.selection;
     const selectedText = editor.document.getText(selection);
     
-    vscode.window.showInformationMessage('Calling ollama')
     const language = getLanguage()
     const content = `Create the function for this function definition, only output the ${language} code, nothing else: --- ${selectedText} ---`
+    vscode.window.showInformationMessage(`Calling ollama with content: ${content}`)
     const response = await ollama.chat({
         model: 'llama3.2',
         messages: [{ role: 'user', content: content }],
