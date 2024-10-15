@@ -122,9 +122,19 @@ async function doUserFuncAction() {
     const selectedText = editor.document.getText(selection);
     const userInput = await vscode.window.showInputBox({placeHolder: 'Operation to perform on selection'})
     
-    vscode.window.showInformationMessage('Calling ollama')
+    if(userInput === "")
+    {
+        vscode.window.showInformationMessage(`Operation to perform cannot be empty.`)
+        return
+    }
+
     const language = getLanguage()
-    const content = `Perform the following operation on this ${language} code: ${userInput}. Only output the ${language} code, nothing else: --- ${selectedText} ---`
+    let content = `Perform the following operation on this ${language} code: ${userInput}. Only output the ${language} code, nothing else: --- ${selectedText} ---`
+    if(selectedText === "")
+    {
+        content = `Perform the following operation: "${userInput}". Only output the ${language} code, nothing else: --- ${selectedText} ---`
+    }
+    vscode.window.showInformationMessage(`Calling ollama with content: ${content}`)
     const response = await ollama.chat({
         model: 'llama3.2',
         messages: [{ role: 'user', content: content }],
