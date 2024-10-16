@@ -17,6 +17,12 @@
     ],
     "main": "./out/extension.js",
     "contributes": {
+        "submenus": [
+            {
+                "id": "simpleOllamaExtension.submenu",
+                "label": "Ollama"
+            }
+        ],
         "commands": [
             {
                 "command": "simpleOllamaExtension.analyze",
@@ -34,16 +40,19 @@
         "menus": {
             "editor/context": [
                 {
-                    "command": "simpleOllamaExtension.analyze",
-                    "group": "navigation"
+                    "submenu": "simpleOllamaExtension.submenu",
+                    "group": "simpleOllamaExtension"
+                }
+            ],
+            "simpleOllamaExtension.submenu":[
+                {
+                    "command": "simpleOllamaExtension.analyze"
                 },
                 {
-                    "command": "simpleOllamaExtension.createfunc",
-                    "group": "navigation"
+                    "command": "simpleOllamaExtension.createfunc"
                 },
                 {
-                    "command": "simpleOllamaExtension.userfunc",
-                    "group": "navigation"
+                    "command": "simpleOllamaExtension.userfunc"
                 }
             ]
         }
